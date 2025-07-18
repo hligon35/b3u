@@ -1,0 +1,21 @@
+# Enable PHP processing
+AddType application/x-httpd-php .php
+
+# Set default charset
+AddDefaultCharset UTF-8
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"
+
+# CORS for API endpoints
+<Files "send-email.php">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type"
+</Files>
+
+# Error pages
+ErrorDocument 404 /index.html
+ErrorDocument 500 /index.html
