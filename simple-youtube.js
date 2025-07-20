@@ -118,10 +118,9 @@ function displayVideos(videos) {
         card.className = 'episode-card';
 
         const publishedDate = video.published ? new Date(video.published).toLocaleDateString() : 'Recent';
-        const episodeLabel = video.isReal ? 'Latest' : 'Episode';
 
         card.innerHTML = `
-            <div class="episode-number">${episodeLabel} ${index + 1}</div>
+            <div class="episode-number">Episode ${index + 1}</div>
             <h3>${video.title}</h3>
             <p>${video.description}</p>
             <div class="episode-meta">
