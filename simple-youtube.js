@@ -96,10 +96,19 @@ async function fetchLatestVideos() {
 }
 
 function displayVideos(videos) {
-    const episodesGrid = document.querySelector('.episodes-grid');
-    if (!episodesGrid) {
-        console.error('Episodes grid not found');
+    // Target the latest-episodes section
+    const latestSection = document.getElementById('latest-episodes');
+    if (!latestSection) {
+        console.error('Latest Episodes section not found');
         return;
+    }
+
+    // Create or select the episodes grid inside latest-episodes
+    let episodesGrid = latestSection.querySelector('.episodes-grid');
+    if (!episodesGrid) {
+        episodesGrid = document.createElement('div');
+        episodesGrid.className = 'episodes-grid';
+        latestSection.appendChild(episodesGrid);
     }
 
     episodesGrid.innerHTML = '';
@@ -107,10 +116,10 @@ function displayVideos(videos) {
     videos.forEach((video, index) => {
         const card = document.createElement('div');
         card.className = 'episode-card';
-        
+
         const publishedDate = video.published ? new Date(video.published).toLocaleDateString() : 'Recent';
         const episodeLabel = video.isReal ? 'Latest' : 'Episode';
-        
+
         card.innerHTML = `
             <div class="episode-number">${episodeLabel} ${index + 1}</div>
             <h3>${video.title}</h3>
@@ -124,11 +133,11 @@ function displayVideos(videos) {
                 Watch Episode →
             </a>
         `;
-        
+
         episodesGrid.appendChild(card);
     });
-    
-    console.log(`Displayed ${videos.length} videos`);
+
+    console.log(`Displayed ${videos.length} videos in #latest-episodes`);
 }
 
 function displayFallbackVideos() {

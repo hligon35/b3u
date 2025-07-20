@@ -1,3 +1,42 @@
+// Dynamically load latest YouTube videos into the featured episodes section
+document.addEventListener('DOMContentLoaded', function() {
+    const featuredContainer = document.getElementById('featured-episodes-dynamic');
+    if (!featuredContainer) return;
+
+    // YouTube channel ID for B3U Podcast
+    const channelId = 'UCSrtA1gGlgo4cQUzoSlzZ5w'; // Replace with actual channel ID
+    const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+    const proxyUrl = `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(rssUrl)}`;
+
+    fetch(proxyUrl)
+        .then(response => response.text())
+        .then(str => (new window.DOMParser()).parseFromString(str, 'text/xml'))
+        .then(data => {
+            const entries = Array.from(data.querySelectorAll('entry')).slice(0, 3);
+            featuredContainer.innerHTML = '';
+            entries.forEach((entry, idx) => {
+                const title = entry.querySelector('title')?.textContent || 'Untitled';
+                const link = entry.querySelector('link')?.getAttribute('href') || '#';
+                const published = entry.querySelector('published')?.textContent || '';
+                const date = published ? new Date(published).toLocaleDateString() : '';
+                const thumbnail = entry.querySelector('media\\:thumbnail, thumbnail')?.getAttribute('url') || '';
+                // Dynamic label for each video
+                const label = `Latest Video ${idx + 1}`;
+                featuredContainer.innerHTML += `
+                    <div class="featured-video-card" style="background:#2c3e50;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);padding:18px 16px;max-width:340px;min-width:220px;display:flex;flex-direction:column;align-items:center;transition:box-shadow 0.2s;">
+                        <div class="featured-label" style="background:#ff6b35;color:#fff;font-weight:600;padding:4px 12px;border-radius:6px;margin-bottom:10px;font-family:'Oswald',sans-serif;letter-spacing:1px;">${label}</div>
+                        <img src="${thumbnail}" alt="${title}" style="width:120px;height:auto;border-radius:8px;margin-bottom:10px;box-shadow:0 1px 6px rgba(0,0,0,0.10);object-fit:cover;" loading="lazy">
+                        <h3 style="color:#fff;font-family:'Oswald',sans-serif;font-size:1.1rem;text-align:center;margin:0 0 8px 0;">${title}</h3>
+                        <div class="episode-meta" style="color:#f8f9fa;font-size:0.95rem;margin-bottom:8px;">${date}</div>
+                        <a href="${link}" class="episode-link" target="_blank" rel="noopener" style="background:#ff6b35;color:#fff;padding:7px 18px;border-radius:6px;text-decoration:none;font-weight:500;font-family:'Inter',sans-serif;transition:background 0.2s;">Watch on YouTube ▶</a>
+                    </div>
+                `;
+            });
+        })
+        .catch(err => {
+            featuredContainer.innerHTML = '<p>Unable to load latest episodes at this time.</p>';
+        });
+});
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile Navigation Toggle
@@ -258,8 +297,8 @@ This message was sent from the B3U Podcast website contact form.
         }
 
         const statValues = [
-            { element: stats[0], target: 50, suffix: '+' },
-            { element: stats[1], target: 10, suffix: 'K+' },
+            { element: stats[0], target: 20, suffix: '+' },
+            { element: stats[1], target: 40, suffix: '+' },
             { element: stats[2], target: 5, suffix: '★' }
         ];
 
@@ -314,10 +353,74 @@ This message was sent from the B3U Podcast website contact form.
 });
 
 // Utility Functions
+
+
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
+
+// --- B3U Podcast: Auto-populate Latest Episodes from YouTube RSS Feed ---
+// Replace YOUR_CHANNEL_ID below with your actual YouTube channel ID
+const YOUTUBE_CHANNEL_ID = "UCSrtA1gGlgo4cQUzoSlzZ5w"; // <-- PUT YOUR CHANNEL ID HERE
+const YOUTUBE_RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
+
+// Add this to your main DOMContentLoaded block
+document.addEventListener('DOMContentLoaded', function() {
+    // ...existing code...
+
+    // --- YouTube Episodes Loader ---
+    const episodesSection = document.getElementById('latest-episodes');
+    if (!episodesSection) {
+        console.warn('No element with id="latest-episodes" found in the HTML.');
+        return;
+    }
+
+    // Try allorigins first, fallback to corsproxy.io if needed
+    const proxyUrls = [
+        `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(YOUTUBE_RSS_URL)}`
+    ];
+
+    function fetchEpisodes(proxyIndex = 0) {
+        fetch(proxyUrls[proxyIndex])
+            .then(response => response.text())
+            .then(xmlStr => {
+                const xml = (new window.DOMParser()).parseFromString(xmlStr, "text/xml");
+                const items = xml.querySelectorAll('entry');
+                if (!items.length) throw new Error('No episodes found in RSS feed.');
+                let html = '';
+                items.forEach((item, idx) => {
+                    if (idx >= 3) return; // Show only the first 3 episodes
+                    const title = item.querySelector('title').textContent;
+                    const link = item.querySelector('link').getAttribute('href');
+                    const published = item.querySelector('published').textContent;
+                    const thumbnail = item.querySelector('media\\:thumbnail')?.getAttribute('url') || 'images/youtube.png';
+                    html += `
+                        <div class="episode-card">
+                            <a href="${link}" target="_blank" rel="noopener" class="episode-link">
+                                <img src="${thumbnail}" alt="${title}" loading="lazy" class="episode-thumb" />
+                                <h3>${title}</h3>
+                                <p class="episode-date">${new Date(published).toLocaleDateString()}</p>
+                            </a>
+                        </div>
+                    `;
+                });
+                episodesSection.innerHTML = html;
+            })
+            .catch(err => {
+                if (proxyIndex + 1 < proxyUrls.length) {
+                    // Try next proxy
+                    fetchEpisodes(proxyIndex + 1);
+                } else {
+                    console.error('Failed to load YouTube episodes:', err);
+                    episodesSection.innerHTML = '<p>Unable to load latest episodes. Please visit our <a href="https://www.youtube.com/@B3uCreatingSuccess" target="_blank">YouTube channel</a>.</p>';
+                }
+            });
+    }
+    fetchEpisodes();
+
+    // ...existing code...
+});
 
 function showNotification(message, type = 'info') {
     // Remove existing notifications

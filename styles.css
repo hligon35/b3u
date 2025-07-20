@@ -59,8 +59,9 @@ h1, h2, h3, h4 {
 .logo-img {
     height: 60px;
     width: auto;
-    border-radius: 8px;
     object-fit: contain;
+    background: transparent;
+    border-radius: 15px;
 }
 
 .nav-logo h1 {
@@ -441,26 +442,57 @@ h1, h2, h3, h4 {
     background: linear-gradient(135deg, #f4f1ea 0%, #e8dcc2 100%);
 }
 
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.services .section-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.services .section-header h2,
+.services .section-header p {
+    grid-column: 2;
+    margin: 0;
+}
+
+.services .section-header h2 {
+    margin-bottom: 15px;
+}
+
 .services-images {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 30px;
-    margin-bottom: 10px;
+    display: contents;
 }
 
 .service-image {
-    width: 200px;
-    height: 150px;
+    width: 350px;
+    height: 350px;
     object-fit: cover;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(93, 78, 55, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    justify-self: center;
 }
 
 .service-image:hover {
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 12px 35px rgba(93, 78, 55, 0.3);
+}
+
+.service-image:first-child {
+    grid-column: 1;
+    grid-row: 1 / 3;
+}
+
+.service-image:last-child {
+    grid-column: 3;
+    grid-row: 1 / 3;
 }
 
 .services-grid {
@@ -873,15 +905,34 @@ h1, h2, h3, h4 {
         gap: 30px;
     }
 
+    .services .section-header {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .services .section-header h2,
+    .services .section-header p {
+        grid-column: 1;
+    }
+
     .services-images {
+        display: flex;
         flex-direction: column;
         align-items: center;
         gap: 20px;
+        margin-top: 30px;
     }
 
     .service-image {
         width: 280px;
         height: 180px;
+    }
+
+    .service-image:first-child,
+    .service-image:last-child {
+        grid-column: unset;
+        grid-row: unset;
     }
 
     .services-grid {
