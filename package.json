@@ -1,0 +1,35 @@
+{
+  "name": "b3u-podcast-website",
+  "version": "1.0.0",
+  "description": "Official website for the B3U podcast featuring a retired veteran host",
+  "main": "index.html",
+  "scripts": {
+    "start": "start index.html",
+    "serve": "python -m http.server 3000",
+    "validate": "echo 'HTML and CSS validation would run here'",
+    "test": "echo 'Tests would run here'"
+  },
+  "keywords": [
+    "podcast",
+    "veteran",
+    "military",
+    "b3u",
+    "community",
+    "service",
+    "outspoken",
+    "active",
+    "giving"
+  ],
+  "author": "B3U Podcast Team",
+  "license": "UNLICENSED",
+  "devDependencies": {},
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/b3upodcast/website"
+  },
+  "homepage": "https://b3upodcast.com",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
