@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Get form data
             const formData = new FormData(contactForm);
+            // No nav menu toggle logic here; handled above for accessibility and consistency
             const name = formData.get('name');
             const email = formData.get('email');
             const subject = formData.get('subject');
@@ -242,7 +243,7 @@ This message was sent from the B3U Podcast website contact form.
         });
     });
 
-    // Intersection Observer for animations
+    // Intersection Observer for animation
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
