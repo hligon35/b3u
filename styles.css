@@ -142,12 +142,35 @@ h1, h2, h3, h4 {
     cursor: pointer;
 }
 
-.bar {
-    width: 25px;
-    height: 3px;
-    background-color: var(--earth-brown);
-    margin: 3px 0;
-    transition: 0.3s;
+.nav-toggle-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 2px solid #ff6b35;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1002;
+}
+
+.nav-toggle-btn .bar {
+  display: block !important;
+  width: 28px !important;
+  height: 4px !important;
+  margin: 4px 0 !important;
+  background: #ff6b35 !important;
+  border-radius: 2px !important;
+  opacity: 1 !important;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.nav-toggle-btn:focus .bar,
+.nav-toggle-btn:hover .bar {
+  background: #2c3e50 !important;
 }
 
 /* Hero Section */
