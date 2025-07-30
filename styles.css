@@ -162,15 +162,35 @@ h1, h2, h3, h4 {
   width: 28px !important;
   height: 4px !important;
   margin: 4px 0 !important;
-  background: #ff6b35 !important;
+  background: linear-gradient(90deg, #ff6b35 60%, #2c3e50 40%) !important;
   border-radius: 2px !important;
   opacity: 1 !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 0 0 1px #0a0a0a;
   transition: background 0.2s, transform 0.2s;
+  border: none !important;
 }
 
 .nav-toggle-btn:focus .bar,
 .nav-toggle-btn:hover .bar {
   background: #2c3e50 !important;
+}
+
+@media (max-width: 1024px) {
+  .nav-toggle-btn {
+    width: 52px;
+    height: 52px;
+    border-width: 2.5px;
+    padding: 10px;
+  }
+  .nav-toggle-btn .bar {
+    width: 34px !important;
+    height: 5px !important;
+    margin: 6px 0 !important;
+    background: #ff6b35 !important;
+    display: block !important;
+    border-radius: 2px !important;
+    opacity: 1 !important;
+  }
 }
 
 /* Hero Section */
@@ -1108,3 +1128,21 @@ a:focus {
 }
 
 /* Removed pulse animation from podcast-cover */
+
+@media (max-width: 1024px) {
+  .nav-toggle-btn {
+    width: 52px !important;
+    height: 52px !important;
+    border-width: 2.5px !important;
+    padding: 10px !important;
+  }
+  .nav-toggle-btn .bar {
+    width: 34px !important;
+    height: 5px !important;
+    margin: 6px 0 !important;
+    background: #ff6b35 !important;
+    display: block !important;
+    border-radius: 2px !important;
+    opacity: 1 !important;
+  }
+}
