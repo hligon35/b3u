@@ -971,6 +971,10 @@ h1, h2, h3, h4 {
         display: flex;
     }
 
+    .nav-toggle-btn {
+        margin-right: 24px;
+    }
+
     .hero-stats {
         flex-direction: column;
         gap: 30px;
