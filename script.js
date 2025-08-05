@@ -331,26 +331,7 @@ This message was sent from the B3U Podcast website contact form.
         }
     });
 
-    // Add scroll effect to navbar
-    let lastScrollTop = 0;
-    const navbar = document.querySelector('.navbar');
-    
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
-            // Scrolling down
-            navbar.style.transform = 'translateY(-100%)';
-        } else {
-            // Scrolling up
-            navbar.style.transform = 'translateY(0)';
-        }
-        
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-    });
-
-    // Add CSS transition to navbar
-    navbar.style.transition = 'transform 0.3s ease-in-out';
+    // Navbar scroll effect removed - navbar now stays fixed at top
 });
 
 // Utility Functions
