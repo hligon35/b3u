@@ -19,6 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Get POST data
 $input = json_decode(file_get_contents('php://input'), true);
+if (!is_array($input)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Invalid request body']);
+    exit;
+}
+
+// Honeypot: if filled, treat as success but do nothing
+if (!empty($input['company'])) {
+    echo json_encode(['success' => true, 'message' => 'Thank you!']);
+    exit;
+}
 
 // Validate required fields
 $required_fields = ['name', 'email', 'subject', 'message'];
@@ -31,10 +42,10 @@ foreach ($required_fields as $field) {
 }
 
 // Sanitize input
-$name = filter_var($input['name'], FILTER_SANITIZE_STRING);
+$name = filter_var($input['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $email = filter_var($input['email'], FILTER_SANITIZE_EMAIL);
-$subject = filter_var($input['subject'], FILTER_SANITIZE_STRING);
-$message = filter_var($input['message'], FILTER_SANITIZE_STRING);
+$subject = filter_var($input['subject'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$message = filter_var($input['message'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 // Validate email format
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -68,9 +79,10 @@ Time: " . date('Y-m-d H:i:s') . "
 
 // Email headers
 $headers = [
-    'From: noreply@b3unstoppable.com',
+    'From: B3U Website <noreply@b3unstoppable.com>',
     'Reply-To: ' . $email,
     'X-Mailer: PHP/' . phpversion(),
+    'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8'
 ];
 

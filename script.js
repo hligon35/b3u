@@ -1,5 +1,46 @@
 // Dynamically load latest YouTube videos into the featured episodes section
 document.addEventListener('DOMContentLoaded', function() {
+    // --- Lightweight YouTube Embeds (replace iframes until play) ---
+    try {
+        const ytIframes = document.querySelectorAll('.video-frame iframe[src*="youtube.com/embed/"]');
+        ytIframes.forEach((iframe) => {
+            const src = iframe.getAttribute('src') || '';
+            const match = src.match(/embed\/(.*?)\b/);
+            const videoId = match ? match[1] : null;
+            if (!videoId) return;
+
+            const container = iframe.parentElement; // .video-frame
+            // Build placeholder button
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'yt-lite';
+            btn.setAttribute('aria-label', 'Play video');
+            btn.style.backgroundImage = `url(https://i.ytimg.com/vi/${videoId}/hqdefault.jpg)`;
+            btn.innerHTML = '<span class="play-btn" aria-hidden="true"></span>';
+
+            // Replace iframe with placeholder button
+            container.innerHTML = '';
+            container.appendChild(btn);
+
+            // On click, swap back to iframe with autoplay
+            btn.addEventListener('click', () => {
+                const player = document.createElement('iframe');
+                // Adopt a minimal, privacy-friendly embed
+                const base = `https://www.youtube-nocookie.com/embed/${videoId}`;
+                const params = 'autoplay=1&rel=0&modestbranding=1&playsinline=1';
+                player.src = `${base}?${params}`;
+                player.setAttribute('title', 'YouTube video player');
+                player.setAttribute('frameborder', '0');
+                player.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+                player.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+                player.allowFullscreen = true;
+                container.innerHTML = '';
+                container.appendChild(player);
+            });
+        });
+    } catch (e) {
+        console.warn('Lite YouTube enhancement skipped:', e);
+    }
     const featuredContainer = document.getElementById('featured-episodes-dynamic');
     if (!featuredContainer) return;
 
@@ -82,6 +123,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
             }
+            // Update aria-current on click
+            navLinks.forEach(l => l.removeAttribute('aria-current'));
+            link.setAttribute('aria-current', 'page');
         });
     });
 
@@ -114,8 +158,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
 
             if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                navLinks.forEach(link => link.classList.remove('active'));
-                if (navLink) navLink.classList.add('active');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    link.removeAttribute('aria-current');
+                });
+                if (navLink) {
+                    navLink.classList.add('active');
+                    navLink.setAttribute('aria-current', 'page');
+                }
             }
         });
     });
@@ -133,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = formData.get('email');
             const subject = formData.get('subject');
             const message = formData.get('message');
+            const companyHp = formData.get('company'); // honeypot
 
             // Basic validation
             if (!name || !email || !subject || !message) {
@@ -145,13 +196,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
+            // Honeypot check: if filled, silently ignore
+            if (companyHp) {
+                showNotification('Thanks! Your message has been received.', 'success');
+                contactForm.reset();
+                return;
+            }
+
             // Primary method: Send email directly to server
-            sendEmailDirectly(name, email, subject, message);
+            sendEmailDirectly(name, email, subject, message, companyHp);
         });
     }
 
     // Send email directly using PHP backend
-    async function sendEmailDirectly(name, email, subject, message) {
+    async function sendEmailDirectly(name, email, subject, message, companyHp = '') {
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
         
@@ -166,10 +224,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    subject: subject,
-                    message: message
+                    name,
+                    email,
+                    subject,
+                    message,
+                    company: companyHp
                 })
             });
 
@@ -386,8 +445,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- YouTube Episodes Loader ---
     const episodesSection = document.getElementById('latest-episodes');
     if (!episodesSection) {
-        console.warn('No element with id="latest-episodes" found in the HTML.');
-        return;
+        return; // silently skip when latest section is not present
     }
 
     // Try allorigins first, fallback to corsproxy.io if needed
@@ -446,8 +504,11 @@ function showNotification(message, type = 'info') {
     // Create notification element
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
+    notification.setAttribute('role', type === 'error' ? 'alert' : 'status');
+    notification.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
     notification.innerHTML = `
         <div class="notification-content">
+            <span class="sr-only">${type === 'error' ? 'Error:' : type === 'success' ? 'Success:' : 'Notice:'}</span>
             <span class="notification-message">${message}</span>
             <button class="notification-close">&times;</button>
         </div>
@@ -538,6 +599,17 @@ animationStyles.textContent = `
     .notification-close:hover {
         opacity: 0.7;
     }
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
 `;
 
 document.head.appendChild(animationStyles);
@@ -579,10 +651,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Track episode clicks
     document.querySelectorAll('.episode-link').forEach(link => {
         link.addEventListener('click', () => {
-            const episodeTitle = link.closest('.episode-card').querySelector('h3').textContent;
-            trackEvent('episode_click', {
-                episode_title: episodeTitle
-            });
+            let episodeTitle = 'Episode';
+            const card = link.closest('.episode-card');
+            if (card) {
+                const h3 = card.querySelector('h3');
+                if (h3) episodeTitle = h3.textContent;
+            }
+            trackEvent('episode_click', { episode_title: episodeTitle });
         });
     });
 

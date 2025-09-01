@@ -6,15 +6,21 @@
     <meta name="description" content="B3U Podcast - Join our retired veteran host for outspoken, active discussions on life, service, and giving back to the community.">
     <meta name="keywords" content="B3U podcast, veteran podcast, military podcast, community service, outspoken veteran, active lifestyle">
     <meta name="author" content="B3U Podcast">
+    <link rel="canonical" href="https://b3unstoppable.net/">
+    <meta name="robots" content="index, follow">
     <meta property="og:title" content="B3U Podcast - Veteran Voices">
     <meta property="og:description" content="Join our retired veteran host for outspoken, active discussions on life, service, and giving back to the community.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://b3unstoppable.net">
-    <meta property="og:image" content="https://b3unstoppable.net/images/b3u-cover.jpg">
+    <meta property="og:url" content="https://b3unstoppable.net/">
+    <meta property="og:image" content="https://b3unstoppable.net/images/B3Upro.jpeg">
+    <meta property="og:site_name" content="B3U Podcast">
+    <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="B3U Podcast - Veteran Voices">
     <meta name="twitter:description" content="Join our retired veteran host for outspoken, active discussions on life, service, and giving back to the community.">
-    <meta name="twitter:image" content="https://b3unstoppable.net/images/b3u-cover.jpg">
+    <meta name="twitter:image" content="https://b3unstoppable.net/images/B3Upro.jpeg">
+    <!-- Optional theme color for some browsers -->
+    <!-- <meta name="theme-color" content="#bfae9e"> -->
 
     <title>B3U Podcast - Burn, Break & Become Unstoppable</title>
 
@@ -26,11 +32,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Performance: YouTube embeds -->
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://i.ytimg.com">
+    <link rel="preconnect" href="https://www.google.com">
+    <link rel="dns-prefetch" href="https://www.youtube.com">
+    <link rel="dns-prefetch" href="https://i.ytimg.com">
+    <link rel="dns-prefetch" href="https://www.google.com">
+    <!-- Preload hero image for faster LCP -->
+    <link rel="preload" as="image" href="images/B3Upro.jpeg" imagesrcset="images/B3Upro.jpeg 1x">
+    <!-- Podcast RSS (assumed Buzzsprout feed) -->
+    <link rel="alternate" type="application/rss+xml" title="B3U Podcast RSS" href="https://feeds.buzzsprout.com/2467135.rss">
     
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
     
-    <!-- Structured Data -->
+        <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -48,6 +65,114 @@
         }
     }
     </script>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Do you offer motivational speaking for veteran and corporate events?",
+                    "acceptedAnswer": {"@type": "Answer", "text": "Yes. B3U provides veteran-led motivational and transformational speaking for conferences, schools, non-profits, and corporate teams."}
+                },
+                {
+                    "@type": "Question",
+                    "name": "How do I book a speaking engagement or coaching session?",
+                    "acceptedAnswer": {"@type": "Answer", "text": "Use the contact form to share your event details and goals. We’ll reply with availability, format options, and pricing."}
+                },
+                {
+                    "@type": "Question",
+                    "name": "Do you offer virtual sessions?",
+                    "acceptedAnswer": {"@type": "Answer", "text": "Yes. We support both in-person and virtual formats to fit your needs and timeline."}
+                },
+                {
+                    "@type": "Question",
+                    "name": "Where can I listen to the B3U Podcast?",
+                    "acceptedAnswer": {"@type": "Answer", "text": "You can listen on Buzzsprout and YouTube. Visit the Episodes section for featured conversations and links."}
+                }
+            ]
+        }
+        </script>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "VideoObject",
+                    "name": "Finding Laughter In Healing w/ Vernard Hines",
+                    "description": "Featured B3U Podcast episode on healing and humor with Vernard Hines.",
+                    "thumbnailUrl": ["https://i.ytimg.com/vi/LEzYnEvNa1U/hqdefault.jpg"],
+                    "embedUrl": "https://www.youtube.com/embed/LEzYnEvNa1U",
+                    "url": "https://www.youtube.com/watch?v=LEzYnEvNa1U"
+                },
+                {
+                    "@type": "VideoObject",
+                    "name": "Building A Legacy Beyond The Field w/ Bryan Hall",
+                    "description": "B3U Podcast on leadership, legacy, and growth with Bryan Hall.",
+                    "thumbnailUrl": ["https://i.ytimg.com/vi/IBywUTYq6oI/hqdefault.jpg"],
+                    "embedUrl": "https://www.youtube.com/embed/IBywUTYq6oI",
+                    "url": "https://www.youtube.com/watch?v=IBywUTYq6oI"
+                },
+                {
+                    "@type": "VideoObject",
+                    "name": "Healing In Harmony w/ Stephanie McRae",
+                    "description": "B3U Podcast conversation on healing and harmony with Stephanie McRae.",
+                    "thumbnailUrl": ["https://i.ytimg.com/vi/WBvnPLKxMrI/hqdefault.jpg"],
+                    "embedUrl": "https://www.youtube.com/embed/WBvnPLKxMrI",
+                    "url": "https://www.youtube.com/watch?v=WBvnPLKxMrI"
+                }
+            ]
+        }
+        </script>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "B3U Podcast",
+            "url": "https://b3unstoppable.net/",
+            "logo": "https://b3unstoppable.net/images/B3Ulogo.png",
+            "sameAs": [
+                "mailto:info@b3unstoppable.net",
+                "https://www.facebook.com/@bree.b3u/",
+                "https://www.youtube.com/@B3uCreatingSuccess",
+                "https://www.tiktok.com/@bree_charles",
+                "https://www.instagram.com/burnbreakbecomeunstoppable",
+                "https://www.linkedin.com/in/bridget-charles-375534169"
+            ],
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "9221 Forest Hill Ave Suite 1 PMB 1021",
+                "addressLocality": "Richmond",
+                "addressRegion": "VA",
+                "postalCode": "23235",
+                "addressCountry": "US"
+            }
+        }
+        </script>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "B3U Podcast",
+            "url": "https://b3unstoppable.net/"
+        }
+        </script>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SiteNavigationElement",
+            "name": ["Home", "About", "Services", "Episodes", "Merch", "Contact", "FAQ"],
+            "url": [
+                "https://b3unstoppable.net/#home",
+                "https://b3unstoppable.net/#about",
+                "https://b3unstoppable.net/#services",
+                "https://b3unstoppable.net/#episodes",
+                "https://b3unstoppable.net/#merch",
+                "https://b3unstoppable.net/#contact",
+                "https://b3unstoppable.net/#faq"
+            ]
+        }
+        </script>
 </head>
 <body>
     <!-- Navigation -->
@@ -90,13 +215,13 @@
                     Join our retired veteran host for outspoken, active discussions on life, service, and giving back to the community. Real stories, real impact, real conversations.
                 </p>
                 <div class="hero-buttons">
-                    <a href="https://www.buzzsprout.com/2467135" class="btn btn-primary">Listen Now</a>
+                    <a href="https://www.buzzsprout.com/2467135" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Listen Now</a>
                     <a href="#contact" class="btn btn-secondary">Get in Touch</a>
                 </div>
             </div>
             <div class="hero-image">
                 <div class="podcast-cover">
-                    <img src="images/B3Upro.jpeg" alt="B3U Podcast Cover" class="cover-image" id="cover-image">
+                    <img src="images/B3Upro.jpeg" alt="B3U Podcast Cover" class="cover-image" id="cover-image" width="300" height="300" loading="eager" decoding="async" sizes="300px">
                 </div>
             </div>
     </div>
@@ -124,12 +249,12 @@
         <div class="container">
             <div class="section-header">
                 <h2>About B3U</h2>
-                <p>Authentic veterans' voice, sharing real stories and experiences</p>
+                <p>Authentic veterans' voice, sharing real stories and experiences. Explore our <a href="#episodes">featured episodes</a> and <a href="#contact">get in touch</a> for speaking engagements.</p>
             </div>
             <div class="about-content">
                 <div class="about-image">
                     <div class="host-placeholder">
-                        <img src="images/B3Upro3.jpeg" alt="Bree Charles" class="host-image">
+                        <img src="images/B3Upro3.jpeg" alt="Bree Charles" class="host-image" width="250" height="250" loading="lazy" decoding="async">
                         <h3>Bree Charles</h3>
                     </div>
                 </div>
@@ -163,10 +288,10 @@
         <div class="container">
             <div class="section-header">
                 <h2>Services</h2>
-                <p>Comprehensive support for individuals and professionals seeking growth</p>
+                <p>Comprehensive support for individuals and professionals seeking growth through veteran motivational speaking, transformational coaching, and leadership development. <a href="#contact">Request booking</a>.</p>
                 <div class="services-images">
-                    <img src="images/B3Ucoaching.jpeg" alt="B3U Coaching Services" class="service-image">
-                    <img src="images/B3Ucoaching2.jpeg" alt="B3U Professional Coaching" class="service-image">
+                    <img src="images/B3Ucoaching.jpeg" alt="B3U Coaching Services" class="service-image" loading="lazy" decoding="async" width="350" height="350" sizes="(max-width: 768px) 280px, 350px">
+                    <img src="images/B3Ucoaching2.jpeg" alt="B3U Professional Coaching" class="service-image" loading="lazy" decoding="async" width="350" height="350" sizes="(max-width: 768px) 280px, 350px">
                 </div>
             </div>
                 <div class="services-grid">
@@ -249,7 +374,7 @@
             <div class="merch-grid">
                 <div class="merch-card merch-card--grow">
                     <h3 class="merch-title-lg">Unstoppable Mug</h3>
-                    <img src="images/mug.png" alt="Unstoppable Mug" class="merch-image merch-img-200 fit-cover mb-28 mt-15">
+                    <img src="images/mug.png" alt="Unstoppable Mug" class="merch-image merch-img-200 fit-cover mb-28 mt-15" loading="lazy" width="200" height="200" decoding="async" sizes="200px">
                     <div class="merch-card-body">
                         <p class="mb-18 mt-auto">Start your day with motivation. 15oz ceramic mug with B3U branding.</p>
                         <p class="merch-price mb-28">$20 (15+ left)</p>
@@ -261,20 +386,20 @@
                 </div>
                 <div class="qr-stack">
                     <div class="merch-card merch-card--cool merch-card--center">
-                        <img src="images/qrcode.png" alt="Scan to order" class="merch-image merch-img-200 fit-contain shadow-soft mb-12">
+                        <img src="images/qrcode.png" alt="Scan to order" class="merch-image merch-img-200 fit-contain shadow-soft mb-12" loading="lazy" width="200" height="200" decoding="async" sizes="200px">
                         <p class="mb-0">Scan to order</p>
                     </div>
                     <div class="merch-card merch-card--cool merch-card--center">
-                        <img src="images/Zelle qr.png" alt="Scan to order" class="merch-image merch-img-200 fit-contain shadow-soft mb-12">
+                        <img src="images/Zelle qr.png" alt="Scan to order" class="merch-image merch-img-200 fit-contain shadow-soft mb-12" loading="lazy" width="200" height="200" decoding="async" sizes="200px">
                         <p class="mb-0">Scan to order</p>
                     </div>
                 </div>
                 <div class="merch-card merch-card--cool merch-card--center">
                     <h3 class="merch-title-sm">B3U T-Shirt Front & Back</h3>
-                    <img src="images/front.png" alt="B3U T-Shirt Front" class="merch-image merch-img-220 fit-contain shadow-soft mb-16">
+                    <img src="images/front.png" alt="B3U T-Shirt Front" class="merch-image merch-img-220 fit-contain shadow-soft mb-16" loading="lazy" width="220" decoding="async">
                     <p class="mb-10">Show your B3U pride with this premium T-Shirt. Includes both the striking front and detailed back design.</p>
                     <p class="merch-price mb-14">$24.99</p>
-                    <img src="images/back.png" alt="B3U T-Shirt Back" class="merch-image merch-img-220 fit-contain shadow-soft">
+                    <img src="images/back.png" alt="B3U T-Shirt Back" class="merch-image merch-img-220 fit-contain shadow-soft" loading="lazy" width="220" decoding="async">
                 </div>
             </div>
         </div>
@@ -290,7 +415,7 @@
             <div class="contact-content">
                 <div class="contact-info">
                     <h3>Let's Connect</h3>
-                    <p>Whether you're a fellow veteran, listener, or looking for speaking services, we'd love to hear from you.</p>
+                    <p>Whether you're a fellow veteran, listener, or looking for speaking services, we'd love to hear from you. Have questions? See our <a href="#faq">FAQs</a>.</p>
                     <div class="contact-methods">
                         <div class="contact-method">
                             <div class="method-icon">✉</div>
@@ -342,9 +467,45 @@
                             <label for="message">Message</label>
                             <textarea id="message" name="message" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
+                        <!-- Honeypot field to deter bots -->
+                        <div class="hp-field" aria-hidden="true">
+                            <label for="company">Company</label>
+                            <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                            <button type="button" id="email-client-fallback" class="btn btn-secondary email-fallback-btn">Open Email App</button>
+                        </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers about speaking, coaching, and the podcast</p>
+            </div>
+            <div class="faq-list">
+                <details>
+                    <summary>Do you offer motivational speaking for veteran and corporate events?</summary>
+                    <p>Yes. B3U provides veteran-led motivational and transformational speaking for conferences, schools, non-profits, and corporate teams.</p>
+                </details>
+                <details>
+                    <summary>How do I book a speaking engagement or coaching session?</summary>
+                    <p>Use the <a href="#contact">contact form</a> to share your event details and goals. We'll reply with availability, format options, and pricing.</p>
+                </details>
+                <details>
+                    <summary>Do you offer virtual sessions?</summary>
+                    <p>Yes. We support both in-person and virtual formats to fit your needs and timeline.</p>
+                </details>
+                <details>
+                    <summary>Where can I listen to the B3U Podcast?</summary>
+                    <p>Listen on <a href="https://www.buzzsprout.com/2467135" target="_blank" rel="noopener">Buzzsprout</a> and <a href="https://www.youtube.com/@B3uCreatingSuccess" target="_blank" rel="noopener">YouTube</a>. Visit <a href="#episodes">Featured Episodes</a>.</p>
+                </details>
             </div>
         </div>
     </section>
@@ -354,7 +515,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <img src="images/B3Ulogo.png" alt="B3U Podcast Logo" class="footer-logo">
+                    <img src="images/B3Ulogo.png" alt="B3U Podcast Logo" class="footer-logo" width="250" loading="lazy" decoding="async" sizes="(max-width: 480px) 180px, 250px">
                     <h3 class="footer-title">B3U</h3>
                     <p class="footer-tagline">Burn, Break & Become Unstoppable</p>
                 </div>
@@ -373,18 +534,18 @@
                     <div class="footer-section">
                         <h4>Connect</h4>
                         <ul>
-                            <li><a href="mailto:info@b3unstoppable.net"><img src="images/email.png" alt="Email" class="footer-link-icon"> info@b3unstoppable.net</a></li>
-                            <li><a href="tel:+1234567890"><img src="images/phone.png" title="Phone" class="footer-link-icon"> (804) 385-2512</a></li>
+                            <li><a href="mailto:info@b3unstoppable.net"><img src="images/email.png" alt="Email" class="footer-link-icon" width="18" height="18" loading="lazy" decoding="async" sizes="18px"> info@b3unstoppable.net</a></li>
+                            <li><a href="tel:+18043852512"><img src="images/phone.png" alt="Phone" class="footer-link-icon" width="18" height="18" loading="lazy" decoding="async" sizes="18px"> (804) 385-2512</a></li>
                             <li><a href="https://www.facebook.com/@bree.b3u/?wtsid=rdr_0n7CUvoTsm3iCzyxQ&hr=1" target="_blank" rel="noopener" aria-label="Facebook">
-                                <img src="images/Facebook.png" alt="Facebook" class="footer-link-icon"> Facebook</a></li>
+                                <img src="images/Facebook.png" alt="Facebook" class="footer-link-icon" width="18" height="18" loading="lazy" decoding="async" sizes="18px"> Facebook</a></li>
                             <li><a href="https://www.youtube.com/@B3uCreatingSuccess" target="_blank" rel="noopener" aria-label="YouTube">
-                                <img src="images/Youtube.png" alt="YouTube" class="footer-link-icon"> YouTube</a></li>
+                                <img src="images/Youtube.png" alt="YouTube" class="footer-link-icon" width="18" height="18" loading="lazy" decoding="async" sizes="18px"> YouTube</a></li>
                             <li><a href="https://www.tiktok.com/@bree_charles?_t=ZP-8y3aVQfKwut&_r=1" target="_blank" rel="noopener" aria-label="TikTok">
-                                <img src="images/TikTok.png" title="TikTok" class="footer-link-icon"> TikTok</a></li>
+                                <img src="images/TikTok.png" alt="TikTok" class="footer-link-icon" width="18" height="18" loading="lazy" decoding="async" sizes="18px"> TikTok</a></li>
                             <li><a href="https://www.instagram.com/burnbreakbecomeunstoppable" target="_blank" rel="noopener" aria-label="Instagram">
-                                <img src="images/IG.png" alt="Instagram" class="footer-link-icon"> Instagram</a></li>
+                                <img src="images/IG.png" alt="Instagram" class="footer-link-icon" width="18" height="18" loading="lazy" decoding="async" sizes="18px"> Instagram</a></li>
                             <li><a href="https://www.linkedin.com/in/bridget-charles-375534169?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener" aria-label="LinkedIn">
-                                <img src="images/Linkedin.png" alt="LinkedIn" class="footer-link-icon"> LinkedIn</a></li>
+                                <img src="images/Linkedin.png" alt="LinkedIn" class="footer-link-icon" width="18" height="18" loading="lazy" decoding="async" sizes="18px"> LinkedIn</a></li>
                         </ul>
                     </div>
                 </div>
@@ -397,6 +558,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>

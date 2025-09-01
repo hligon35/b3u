@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://b3unstoppable.net/sitemap.xml
