@@ -1751,3 +1751,13 @@ a:focus {
     opacity: 1 !important;
   }
 }
+
+/* Inline form status messages */
+.form-status {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    min-height: 1.25rem;
+}
+.form-status--sending { color: #f0ad4e; }
+.form-status--success { color: #2ecc71; }
+.form-status--error { color: #e74c3c; }

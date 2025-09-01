@@ -205,10 +205,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Prefer Google Apps Script if configured; fall back to PHP; then mailto
             const gasEndpoint = contactForm.getAttribute('data-gas-endpoint') || '';
+            const statusEl = document.getElementById('form-status');
+            if (statusEl) {
+                statusEl.textContent = 'Sending…';
+                statusEl.className = 'form-status form-status--sending';
+            }
             if (gasEndpoint) {
                 sendViaGoogleAppsScript(gasEndpoint, { name, email, subject, message, company: companyHp })
                     .then(() => {
                         showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+                        if (statusEl) {
+                            statusEl.textContent = 'Message sent successfully!';
+                            statusEl.className = 'form-status form-status--success';
+                        }
                         contactForm.reset();
                     })
                     .catch((err) => {
@@ -277,6 +286,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (result.success) {
                 showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+                const statusEl = document.getElementById('form-status');
+                if (statusEl) {
+                    statusEl.textContent = 'Message sent successfully!';
+                    statusEl.className = 'form-status form-status--success';
+                }
                 contactForm.reset();
                 submitButton.textContent = originalText;
                 submitButton.disabled = false;
@@ -287,6 +301,11 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Direct email failed:', error);
             showNotification('Unable to send message directly. Please try the email client option.', 'error');
+            const statusEl = document.getElementById('form-status');
+            if (statusEl) {
+                statusEl.textContent = 'Could not send via server. Use "Open Email App" below.';
+                statusEl.className = 'form-status form-status--error';
+            }
             submitButton.textContent = originalText;
             submitButton.disabled = false;
             
