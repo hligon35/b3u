@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Contact Form Handling
-    const contactForm = document.querySelector('.contact-form');
+    const contactForm = document.querySelector('.contact-form form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -203,9 +203,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Primary method: Send email directly to server
-            sendEmailDirectly(name, email, subject, message, companyHp);
+            // Prefer Google Apps Script if configured; fall back to PHP; then mailto
+            const gasEndpoint = contactForm.getAttribute('data-gas-endpoint') || '';
+            if (gasEndpoint) {
+                sendViaGoogleAppsScript(gasEndpoint, { name, email, subject, message, company: companyHp })
+                    .then(() => {
+                        showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+                        contactForm.reset();
+                    })
+                    .catch((err) => {
+                        console.error('GAS send failed:', err);
+                        // Fallback to PHP
+                        sendEmailDirectly(name, email, subject, message, companyHp);
+                    });
+            } else {
+                // No GAS configured, try PHP
+                sendEmailDirectly(name, email, subject, message, companyHp);
+            }
         });
+    }
+
+    // Send via Google Apps Script (expects a deployed Web App URL)
+    async function sendViaGoogleAppsScript(endpoint, payload) {
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
+
+        try {
+            const fd = new FormData();
+            Object.entries(payload).forEach(([k, v]) => fd.append(k, v ?? ''));
+            await fetch(endpoint, {
+                method: 'POST',
+                mode: 'no-cors', // allow anonymous Web App without CORS headers
+                body: fd,
+            });
+            // With no-cors, we can\'t read status reliably; assume success if no exception
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+            return true;
+        } catch (e) {
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+            throw e;
+        }
     }
 
     // Send email directly using PHP backend
@@ -662,7 +703,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Track contact form submissions
-    const contactForm = document.querySelector('.contact-form');
+    const contactForm = document.querySelector('.contact-form form');
     if (contactForm) {
         contactForm.addEventListener('submit', () => {
             trackEvent('contact_form_submit');
