@@ -183,7 +183,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = formData.get('email');
             const subject = formData.get('subject');
             const message = formData.get('message');
-            const companyHp = formData.get('company'); // honeypot
+            // Honeypot: support both legacy 'company' and new 'extra_field'
+            const companyHp = formData.get('extra_field') || formData.get('company');
 
             // Basic validation
             if (!name || !email || !subject || !message) {
@@ -211,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 statusEl.className = 'form-status form-status--sending';
             }
             if (gasEndpoint) {
-                sendViaGoogleAppsScript(gasEndpoint, { name, email, subject, message, company: companyHp })
+                sendViaGoogleAppsScript(gasEndpoint, { name, email, subject, message, company: companyHp, extra_field: companyHp })
                     .then(() => {
                         showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
                         if (statusEl) {

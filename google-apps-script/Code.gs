@@ -29,7 +29,7 @@ function doPost(e) {
     const email = (params.email || '').trim();
     const subject = (params.subject || '').trim();
     const message = (params.message || '').trim();
-    const company = (params.company || '').trim(); // honeypot; if filled, ignore
+  const company = (params.company || params.extra_field || '').trim(); // honeypot; if filled, ignore
 
     if (company) {
       // Silently treat as success to deter bots

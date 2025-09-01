@@ -445,7 +445,7 @@
                 </div>
                 <div class="contact-form">
                     <!-- If using Google Apps Script, paste your Web App URL into data-gas-endpoint below -->
-                    <form action="#" method="POST" data-gas-endpoint="https://script.google.com/macros/s/AKfycbz-5XLLHkomsRVlKCpa3ulWrIf4Ky7RA0E3YPoiTXYMJFidEmkXI2m4ZDCstnTkxIyvfw/exec">
+                    <form action="#" method="POST" autocomplete="off" data-gas-endpoint="https://script.google.com/macros/s/AKfycbz-5XLLHkomsRVlKCpa3ulWrIf4Ky7RA0E3YPoiTXYMJFidEmkXI2m4ZDCstnTkxIyvfw/exec">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" required>
@@ -468,10 +468,10 @@
                             <label for="message">Message</label>
                             <textarea id="message" name="message" required></textarea>
                         </div>
-                        <!-- Honeypot field to deter bots -->
+                        <!-- Honeypot field to deter bots (renamed to reduce autofill) -->
                         <div class="hp-field" aria-hidden="true">
-                            <label for="company">Company</label>
-                            <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+                            <label for="extra_field">Leave this field empty</label>
+                            <input type="text" id="extra_field" name="extra_field" tabindex="-1" autocomplete="off">
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">Send Message</button>
