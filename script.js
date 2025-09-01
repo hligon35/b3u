@@ -44,8 +44,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.getElementById('nav-menu');
     
     if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function() {
+        navToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
             navMenu.classList.toggle('active');
+            document.body.classList.toggle('nav-open');
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', String(!isExpanded));
             
             // Animate hamburger bars
             const bars = navToggle.querySelectorAll('.bar');
@@ -66,13 +70,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if (navMenu.classList.contains('active')) {
+            if (navMenu && navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
-                const bars = navToggle.querySelectorAll('.bar');
-                bars.forEach(bar => {
-                    bar.style.transform = 'none';
-                    bar.style.opacity = '1';
-                });
+                document.body.classList.remove('nav-open');
+                if (navToggle) {
+                    navToggle.setAttribute('aria-expanded', 'false');
+                    const bars = navToggle.querySelectorAll('.bar');
+                    bars.forEach(bar => {
+                        bar.style.transform = 'none';
+                        bar.style.opacity = '1';
+                    });
+                }
             }
         });
     });
@@ -321,13 +329,37 @@ This message was sent from the B3U Podcast website contact form.
 
     // Keyboard navigation
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+        if (e.key === 'Escape' && navMenu && navMenu.classList.contains('active')) {
             navMenu.classList.remove('active');
-            const bars = navToggle.querySelectorAll('.bar');
-            bars.forEach(bar => {
-                bar.style.transform = 'none';
-                bar.style.opacity = '1';
-            });
+            document.body.classList.remove('nav-open');
+            if (navToggle) {
+                navToggle.setAttribute('aria-expanded', 'false');
+                const bars = navToggle.querySelectorAll('.bar');
+                bars.forEach(bar => {
+                    bar.style.transform = 'none';
+                    bar.style.opacity = '1';
+                });
+            }
+        }
+    });
+
+    // Close menu if clicking outside
+    document.addEventListener('click', function(e) {
+        if (navMenu && navMenu.classList.contains('active')) {
+            const clickInsideMenu = navMenu.contains(e.target);
+            const clickOnToggle = navToggle && navToggle.contains(e.target);
+            if (!clickInsideMenu && !clickOnToggle) {
+                navMenu.classList.remove('active');
+                document.body.classList.remove('nav-open');
+                if (navToggle) {
+                    navToggle.setAttribute('aria-expanded', 'false');
+                    const bars = navToggle.querySelectorAll('.bar');
+                    bars.forEach(bar => {
+                        bar.style.transform = 'none';
+                        bar.style.opacity = '1';
+                    });
+                }
+            }
         }
     });
 
