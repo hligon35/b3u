@@ -1,5 +1,12 @@
-const RECIPIENT = 'info@b3unstoppable.net';
+// B3U Contact Form - Google Apps Script Web App
+// Sends website submissions to Bree, with reply-to set to the info@ alias.
+// Optionally send using the true Gmail alias (requires Advanced Gmail service enabled + Send-as configured).
+
+const PRIMARY_RECIPIENT = 'breecharles@b3unstoppable.net';
+const INFO_ALIAS = 'info@b3unstoppable.net';
 const SUBJECT_PREFIX = 'Message From B3Unstoppable.net';
+const BCC_SELF = true; // set false to disable bcc to executing account
+const USE_GMAIL_ALIAS = false; // set true only if Advanced Gmail service is enabled and alias is configured
 
 // Map the select values from the website to readable labels
 const SUBJECT_LABELS = {
@@ -10,11 +17,9 @@ const SUBJECT_LABELS = {
 };
 
 function getParams(e) {
-  // Prefer form fields (multipart/form-data or urlencoded)
   if (e && e.parameter && Object.keys(e.parameter).length) {
     return e.parameter;
   }
-  // Fallback: JSON body (if someone posts JSON)
   try {
     if (e && e.postData && e.postData.type && e.postData.contents) {
       if ((e.postData.type + '').indexOf('application/json') !== -1) {
@@ -29,26 +34,23 @@ function getParams(e) {
 
 function doPost(e) {
   try {
-  // Collect params from form-data or JSON
-  const params = getParams(e);
-
-  const name = (params.name || '').trim();
-  const email = (params.email || '').trim();
-  const subjectRaw = (params.subject || '').trim();
-  const message = (params.message || '').trim();
-  // Honeypot: accept either 'company' (legacy) or 'extra_field' (current)
-  const honeypot = (params.company || params.extra_field || '').trim();
+    const params = getParams(e);
+    const name = (params.name || '').trim();
+    const email = (params.email || '').trim();
+    const subjectRaw = (params.subject || '').trim();
+    const message = (params.message || '').trim();
+    const honeypot = (params.company || params.extra_field || '').trim(); // accept either field
 
     if (honeypot) {
-      // Silently treat as success to deter bots
       return ContentService.createTextOutput('OK').setMimeType(ContentService.MimeType.TEXT);
     }
-
     if (!name || !email || !subjectRaw || !message) {
       return ContentService.createTextOutput('Missing required fields').setMimeType(ContentService.MimeType.TEXT);
     }
 
     const subjectLabel = SUBJECT_LABELS[subjectRaw] || subjectRaw;
+    Logger.log('doPost from %s <%s> subject: %s', name, email, subjectLabel);
+
     const mailSubject = `${SUBJECT_PREFIX}: ${subjectLabel}`;
     const body = `Message From B3Unstoppable.net\n\n` +
       `Name: ${name}\n` +
@@ -56,24 +58,27 @@ function doPost(e) {
       `Subject: ${subjectLabel}\n\n` +
       `Message:\n${message}\n\n` +
       `---\nSent via Google Apps Script Web App`;
+    const htmlBody = body.replace(/\n/g, '<br>');
 
-    // Send email
-    MailApp.sendEmail(
-      RECIPIENT,
-      mailSubject,
-      body,
-      {
+    if (USE_GMAIL_ALIAS) {
+      sendViaGmailAlias(PRIMARY_RECIPIENT, mailSubject, htmlBody, email);
+    } else {
+      const options = {
         name: 'B3U Website',
-        replyTo: email,
-        cc: 'hligon@getsparqd.com',
-        htmlBody: body.replace(/\n/g, '<br>')
+        replyTo: INFO_ALIAS, // replies go to info@
+        htmlBody
+      };
+      if (BCC_SELF) {
+        const me = Session.getActiveUser().getEmail();
+        if (me) options.bcc = me;
       }
-    );
+      MailApp.sendEmail(PRIMARY_RECIPIENT, mailSubject, body, options);
+    }
 
     // Optional: store in a sheet
-  // const ss = SpreadsheetApp.openById('PUT_SHEET_ID_HERE');
-  // const sh = ss.getSheetByName('Submissions');
-  // sh.appendRow([new Date(), name, email, subjectLabel, message]);
+    // const ss = SpreadsheetApp.openById('PUT_SHEET_ID_HERE');
+    // const sh = ss.getSheetByName('Submissions');
+    // sh.appendRow([new Date(), name, email, subjectLabel, message]);
 
     return ContentService.createTextOutput('OK').setMimeType(ContentService.MimeType.TEXT);
   } catch (err) {
@@ -84,107 +89,56 @@ function doPost(e) {
   }
 }
 
-// Simple health check for the Web App URL (optional but handy)
 function doGet(e) {
   return ContentService.createTextOutput('OK').setMimeType(ContentService.MimeType.TEXT);
 }
 
-// Minimal diagnostic (no scopes required)
-function ping() {
-  Logger.log('ping');
-  return 'OK';
-}
+// Diagnostics
+function ping() { Logger.log('ping'); return 'OK'; }
+function whoAmI() { const me = Session.getActiveUser().getEmail(); Logger.log('Active user: ' + me); return me || '(unknown)'; }
+function authorize() { const q = MailApp.getRemainingDailyQuota(); Logger.log('Remaining daily quota: ' + q); return q; }
 
-// Identify which account executes this script
-function whoAmI() {
-  const me = Session.getActiveUser().getEmail();
-  Logger.log('Active user: ' + me);
-  return me || '(unknown)';
-}
-
-// Explicit authorization helper (does not send email)
-function authorize() {
-  // Touch MailApp to trigger the permission prompt on first run
-  const quota = MailApp.getRemainingDailyQuota();
-  Logger.log('Remaining daily quota: ' + quota);
-  return quota;
-}
-
-// Manual test to authorize MailApp and verify delivery
 function testMail() {
   const subject = `${SUBJECT_PREFIX}: Test Mail (Manual)`;
-  const body = [
-    'Manual test from Google Apps Script.',
-    'If you received this, MailApp is authorized and working.',
-    '',
-  '- B3U Website'
-  ].join('\n');
-
+  const body = ['Manual test from Google Apps Script.','If you received this, MailApp is authorized and working.','','- B3U Website'].join('\n');
   const before = MailApp.getRemainingDailyQuota();
   Logger.log('Quota before send: ' + before);
-
-  MailApp.sendEmail(
-    RECIPIENT,
-    subject,
-    body,
-    {
-      name: 'B3U Website',
-      replyTo: 'no-reply@b3unstoppable.net',
-      cc: 'hligon@getsparqd.com',
-      htmlBody: body.replace(/\n/g, '<br>')
-    }
-  );
-
+  MailApp.sendEmail(PRIMARY_RECIPIENT, subject, body, { name: 'B3U Website', replyTo: INFO_ALIAS, cc: 'hligon@getsparqd.com', htmlBody: body.replace(/\n/g, '<br>') });
   const after = MailApp.getRemainingDailyQuota();
   Logger.log('Quota after send: ' + after);
-  Logger.log('Sent testMail to: ' + RECIPIENT);
 }
 
-// Send a test email to the executing account's inbox
 function testMailSelf() {
   const me = Session.getActiveUser().getEmail();
-  const subject = `${SUBJECT_PREFIX}: Test Mail (Self)`;
-  const body = 'Self-test from Google Apps Script.';
-  const before = MailApp.getRemainingDailyQuota();
-  Logger.log('Quota before send: ' + before + ', sending to self: ' + me);
-  MailApp.sendEmail(me, subject, body);
-  const after = MailApp.getRemainingDailyQuota();
-  Logger.log('Quota after send: ' + after);
+  MailApp.sendEmail(me, `${SUBJECT_PREFIX}: Test Mail (Self)`, 'Self-test from Google Apps Script.');
 }
 
-// Simulate a doPost submission inside the Script Editor
-function testDoPost() {
-  const fakeEvent = {
-    parameter: {
-      name: 'Test User',
-      email: 'test@example.com',
-  subject: 'general',
-      message: 'This is a simulated submission to verify end-to-end flow.',
-      extra_field: '' // honeypot must be empty
-    }
-  };
-  const out = doPost(fakeEvent);
-  try {
-    Logger.log(out && out.getContent ? out.getContent() : out);
-  } catch (e) {
-    Logger.log(out);
+// Send using Gmail alias (Advanced Gmail API must be enabled; alias configured in Gmail)
+function sendViaGmailAlias(to, subject, htmlBody, replyToUserEmail) {
+  // If Advanced Gmail service isn't enabled, fall back gracefully
+  if (typeof Gmail === 'undefined' || !Gmail || !Gmail.Users || !Gmail.Users.Messages || !Gmail.Users.Messages.send) {
+    Logger.log('Advanced Gmail service not enabled; falling back to MailApp with replyTo alias.');
+    const textBody = htmlBody.replace(/<br\s*\/?>(\r?\n)?/gi, '\n').replace(/<[^>]+>/g, '');
+    const opts = { name: 'B3U Website', replyTo: INFO_ALIAS, cc: 'hligon@getsparqd.com', htmlBody };
+    MailApp.sendEmail(to, subject, textBody, opts);
+    return;
   }
-}
-
-// Build email content without sending (no MailApp scopes)
-function testNoMail() {
-  const name = 'Test User';
-  const email = 'test@example.com';
-  const subjectRaw = 'general';
-  const subjectLabel = SUBJECT_LABELS[subjectRaw] || subjectRaw;
-  const message = 'This is a content-only test.';
-  const mailSubject = `${SUBJECT_PREFIX}: ${subjectLabel}`;
-  const body = `Message From B3Unstoppable.net\n\n` +
-    `Name: ${name}\n` +
-    `Email: ${email}\n` +
-    `Subject: ${subjectLabel}\n\n` +
-    `Message:\n${message}\n\n` +
-    `---\nSent via Google Apps Script Web App`;
-  Logger.log(mailSubject + "\n\n" + body);
-  return mailSubject;
+  // Build RFC 2822 raw message with From set to the alias (requires Advanced Gmail + Send-as)
+  const from = INFO_ALIAS; // alias configured in Gmail "Send mail as"
+  const headers = [
+    `From: B3U Website <${from}>`,
+    `To: ${to}`,
+    `Cc: hligon@getsparqd.com`,
+    `Reply-To: ${INFO_ALIAS}`,
+    'MIME-Version: 1.0',
+    'Content-Type: text/html; charset=UTF-8',
+    `Subject: ${subject}`,
+    '',
+    htmlBody
+  ].join('\r\n');
+  const raw = Utilities.base64EncodeWebSafe(headers);
+  // @ts-ignore - Advanced Gmail service
+  // eslint-disable-next-line no-undef
+  const sent = Gmail.Users.Messages.send({ raw }, 'me');
+  Logger.log('Gmail alias send id: ' + (sent && sent.id));
 }
