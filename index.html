@@ -6,6 +6,8 @@
     <meta name="description" content="B3U Podcast - Join our retired veteran host for outspoken, active discussions on life, service, and giving back to the community.">
     <meta name="keywords" content="B3U podcast, veteran podcast, military podcast, community service, outspoken veteran, active lifestyle">
     <meta name="author" content="B3U Podcast">
+    <!-- SEO: Help Google render rich previews and allow large snippets/thumbnails -->
+    <meta name="googlebot" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
     <link rel="canonical" href="https://b3unstoppable.net/">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="B3U Podcast - Veteran Voices">
@@ -44,8 +46,8 @@
     <!-- Podcast RSS (assumed Buzzsprout feed) -->
     <link rel="alternate" type="application/rss+xml" title="B3U Podcast RSS" href="https://feeds.buzzsprout.com/2467135.rss">
     
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- Styles: use minified CSS for faster delivery (original kept for dev) -->
+    <link rel="stylesheet" href="styles.min.css"><!-- Perf: minified bundle -->
     
         <!-- Structured Data -->
     <script type="application/ld+json">
@@ -175,13 +177,16 @@
         </script>
 </head>
 <body>
+    <!-- Accessibility: Skip link to jump to main content for keyboard/screen reader users -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Primary">
         <div class="nav-container">
             <div class="nav-logo">
                 <img src="images/B3Ulogo.png" alt="B3U Podcast Logo" class="logo-img">
                 <div class="navbar__title">
-                    <h1 class="navbar__title-text"><span>Burn, Break & Become Unstoppable</span></h1>
+                    <!-- SEO: Avoid using the global H1 inside the nav; keep visuals but adjust semantics -->
+                    <div class="navbar__title-text" role="heading" aria-level="2"><span>Burn, Break & Become Unstoppable</span></div>
                 </div>
             </div>
             <div class="nav-menu" id="nav-menu">
@@ -201,6 +206,10 @@
             </div>
         </div>
     </nav>
+    <!-- Semantics: Wrap main site sections in <main> to improve a11y/SEO without changing layout -->
+    <main id="main-content">
+        <!-- SEO/a11y: Hidden H1 gives a single, clear page title for crawlers and screen readers -->
+        <h1 class="visually-hidden">B3U Podcast – Burn, Break & Become Unstoppable</h1>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -221,6 +230,7 @@
             </div>
             <div class="hero-image">
                 <div class="podcast-cover">
+                    <!-- Perf: Eager-load hero image for faster LCP (cross-browser safe) -->
                     <img src="images/B3Upro.jpeg" alt="B3U Podcast Cover" class="cover-image" id="cover-image" width="300" height="300" loading="eager" decoding="async" sizes="300px">
                 </div>
             </div>
@@ -364,7 +374,7 @@
         </div>
     </section>
 
-     <!-- Merchandise Section -->
+    <!-- Merchandise Section -->
     <section id="merch" class="merchandise">
         <div class="container">
             <div class="section-header">
@@ -379,7 +389,8 @@
                         <p class="mb-18 mt-auto">Start your day with motivation. 15oz ceramic mug with B3U branding.</p>
                         <p class="merch-price mb-28">$20 (15+ left)</p>
                     </div>
-                    <video controls poster="images/mug.png" class="merch-video">
+                    <!-- Perf: don't auto-download full video; only metadata -->
+                    <video controls poster="images/mug.png" class="merch-video" preload="metadata">
                         <source src="images/mugvid.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -513,6 +524,9 @@
         </div>
     </section> -->
 
+    <!-- Close main landmark before footer for proper semantics -->
+    </main>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -559,6 +573,7 @@
         </div>
     </footer>
 
+    <!-- Scripts: keep original JS to preserve exact behavior; minified variant available if needed -->
     <script src="script.js" defer></script>
 </body>
 </html>

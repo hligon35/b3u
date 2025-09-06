@@ -1761,3 +1761,20 @@ a:focus {
 .form-status--sending { color: #f0ad4e; }
 .form-status--success { color: #2ecc71; }
 .form-status--error { color: #e74c3c; }
+
+/* Accessibility: Skip link is hidden until focused (no visual change) */
+.skip-link { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+.skip-link:focus { left: 10px; top: 10px; width: auto; height: auto; padding: 10px 14px; background: #ff6b35; color: #fff; border-radius: 6px; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+
+/* Accessibility: utility for visually hidden but screen-reader accessible content */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
