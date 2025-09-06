@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow"><!-- 404 pages should not be indexed -->
+  <title>Page Not Found • B3U Podcast</title>
+  <link rel="canonical" href="https://b3unstoppable.net/">
+  <!-- Match site theme and performance hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.min.css"><!-- Perf: minified CSS -->
+</head>
+<body>
+  <!-- Accessibility: skip link -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Minimal brand header (no nav links needed on 404) -->
+  <header class="navbar" aria-label="Site header">
+    <div class="nav-container">
+      <a href="/" class="nav-logo" aria-label="B3U Podcast Home">
+        <img src="/images/B3Ulogo.png" alt="B3U Podcast Logo" class="logo-img" loading="lazy" decoding="async">
+        <div class="navbar__title-text" role="heading" aria-level="2"><span>Burn, Break & Become Unstoppable</span></div>
+      </a>
+      <div></div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Reuse hero styles to keep look-and-feel consistent with the site -->
+    <section class="hero hero--404">
+      <div class="container">
+        <div class="hero-content hero-content--one-col is-centered-text">
+          <div class="hero-text">
+            <!-- Large friendly 404 headline in the established type scale -->
+            <div class="hero-title">
+              <span class="title-main">404</span>
+              <span class="title-sub">Page Not Found</span>
+            </div>
+            <p class="hero-description">We couldn't find that page. You can head back home or explore episodes and services.</p>
+            <div class="hero-buttons hero-buttons--center">
+              <a href="/" class="btn btn-primary">Go to Home</a>
+              <a href="/#episodes" class="btn btn-secondary">View Episodes</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p class="footer-credit">© 2024 B3U Podcast • Veteran-owned and operated.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
