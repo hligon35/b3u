@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 export default function Hero() {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center gradient-hero overflow-hidden">
-      <div className="absolute inset-0 opacity-30 mix-blend-overlay bg-[url('https://picsum.photos/1200/800?blur=3')] bg-cover bg-center" />
+      <div className="absolute inset-0 opacity-20 mix-blend-multiply bg-[url('https://picsum.photos/1200/800?blur=3')] bg-cover bg-center" />
       <div className="section-padding relative z-10 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
@@ -18,7 +18,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.8 }}
-          className="max-w-2xl mx-auto text-lg md:text-xl text-white/80 mb-10"
+          className="max-w-2xl mx-auto text-lg md:text-xl text-white/90 mb-10"
         >
           A veteran-led podcast and community amplifying stories of growth, grit, and giving back.
         </motion.p>

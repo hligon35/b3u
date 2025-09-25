@@ -14,7 +14,7 @@ export default function ShopPage() {
 
   return (
     <Layout>
-      <section className="section-padding">
+  <section className="section-padding bg-white">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10 mb-12">
           <div>
             <h1 className="text-4xl font-bold mb-4">Shop</h1>

@@ -7,7 +7,7 @@ export default function HomePage() {
     <Layout>
       <Hero />
       {/* About Section */}
-      <section id="about" className="section-padding bg-navy">
+  <section id="about" className="section-padding bg-white">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">About <span className="text-brandOrange">B3U</span></h2>
@@ -23,7 +23,7 @@ export default function HomePage() {
         </div>
       </section>
       {/* Podcast Preview */}
-      <section id="podcast" className="section-padding bg-brandBlue-dark/20">
+  <section id="podcast" className="section-padding bg-[#F4F8FB]">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-10 mb-10">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Latest Episodes</h2>
@@ -43,14 +43,14 @@ export default function HomePage() {
         </div>
       </section>
       {/* Community / Testimonials */}
-      <section id="community" className="section-padding alt-band">
+  <section id="community" className="section-padding alt-band">
         <div className="text-center mb-12 max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Community Voices</h2>
           <p className="text-white/90">Stories from listeners and members who embody resilience and service.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {[1,2,3].map(t => (
-            <div key={t} className="card bg-white/10">
+            <div key={t} className="card">
               <p className="italic text-sm mb-4">“B3U reignited my drive to serve and lead. Each episode is a reminder that our stories matter.”</p>
               <div className="flex items-center gap-3">
                 <span className="h-10 w-10 rounded-full bg-[url('https://picsum.photos/100/100?portrait=${t}')] bg-cover bg-center" />
@@ -64,7 +64,7 @@ export default function HomePage() {
         </div>
       </section>
       {/* Shop Teaser */}
-      <section id="shop" className="section-padding bg-brandOrange-dark/30">
+  <section id="shop" className="section-padding bg-[#FFF5EE]">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Gear Up & Give Back</h2>
@@ -83,12 +83,12 @@ export default function HomePage() {
         </div>
       </section>
       {/* Newsletter */}
-      <section id="newsletter" className="section-padding bg-brandBlue-dark/25">
+  <section id="newsletter" className="section-padding bg-[#F4F8FB]">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Stay in the Loop</h2>
-          <p className="text-white/70 mb-6">Get new episodes, events, and community opportunities delivered.</p>
+          <p className="text-navy/70 mb-6">Get new episodes, events, and community opportunities delivered.</p>
           <form className="flex flex-col sm:flex-row gap-4 justify-center">
-            <input type="email" required placeholder="Email address" className="flex-1 px-5 py-3 rounded-md bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-brandBlue" />
+            <input type="email" required placeholder="Email address" className="flex-1 px-5 py-3 rounded-md bg-white border border-black/10 focus:outline-none focus:ring-2 focus:ring-brandBlue" />
             <button className="btn-primary" type="submit">Subscribe</button>
           </form>
         </div>

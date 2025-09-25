@@ -21,14 +21,15 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const colorClass = scrolled ? 'text-navy' : 'text-white';
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition backdrop-blur ${scrolled ? 'bg-navy/90 shadow-lg' : 'bg-transparent'}`}>
-      <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 h-20">
-        <Link href="/" className="flex items-center gap-2 font-display text-2xl tracking-wide">
+    <header className={`fixed top-0 left-0 w-full z-50 transition backdrop-blur ${scrolled ? 'bg-white/95 shadow-lg' : 'bg-transparent'}`}>
+      <nav className={`max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 h-20 ${colorClass}`}>
+        <Link href="/" className={`flex items-center gap-2 font-display text-2xl tracking-wide ${colorClass}`}>
           <span className="inline-block h-10 w-10 rounded-full bg-gradient-to-br from-brandBlue to-brandOrange"></span>
           <span>B3U</span>
         </Link>
-        <ul className="hidden md:flex items-center gap-8 font-semibold">
+  <ul className="hidden md:flex items-center gap-8 font-semibold">
           {navItems.map(item => (
             <li key={item.href}>
               <Link

@@ -3,7 +3,7 @@ import Layout from '@/components/Layout';
 export default function CommunityPage() {
   return (
     <Layout>
-      <section className="section-padding">
+  <section className="section-padding bg-white">
         <h1 className="text-4xl font-bold mb-6">Community Stories</h1>
         <p className="max-w-2xl text-white/80 mb-12">Real impact from real people. Share your journey and help others find strength in theirs.</p>
         <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -22,7 +22,7 @@ export default function CommunityPage() {
           <button className="btn-primary" type="submit">Submit Story</button>
         </form>
       </section>
-      <section className="section-padding bg-brandBlue-dark/20">
+  <section className="section-padding bg-[#F4F8FB]">
         <h2 className="text-3xl font-bold mb-8">Event Gallery</h2>
         <div className="grid md:grid-cols-4 gap-4">
           {[...Array(8)].map((_,i) => (

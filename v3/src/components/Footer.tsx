@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-navy border-t border-white/10 mt-32">
+    <footer className="bg-navy text-white border-t border-white/10 mt-32">
       <div className="section-padding grid md:grid-cols-4 gap-12">
         <div>
           <div className="flex items-center gap-3 mb-4">
@@ -15,17 +15,17 @@ export default function Footer() {
           <h4 className="font-semibold mb-3 text-brandOrange">Explore</h4>
           <ul className="space-y-2 text-sm">
             {['Home','About','Podcast','Community','Shop','Contact'].map(item => (
-              <li key={item}><Link className="hover:text-brandOrange" href={`/${item === 'Home' ? '' : item.toLowerCase()}`}>{item}</Link></li>
+              <li key={item}><Link className="text-white/80 hover:text-brandOrange" href={`/${item === 'Home' ? '' : item.toLowerCase()}`}>{item}</Link></li>
             ))}
           </ul>
         </div>
         <div>
           <h4 className="font-semibold mb-3 text-brandOrange">Connect</h4>
           <ul className="space-y-2 text-sm">
-            <li><a className="hover:text-brandOrange" href="#">Instagram</a></li>
-            <li><a className="hover:text-brandOrange" href="#">YouTube</a></li>
-            <li><a className="hover:text-brandOrange" href="#">TikTok</a></li>
-            <li><a className="hover:text-brandOrange" href="#">LinkedIn</a></li>
+            <li><a className="text-white/80 hover:text-brandOrange" href="#">Instagram</a></li>
+            <li><a className="text-white/80 hover:text-brandOrange" href="#">YouTube</a></li>
+            <li><a className="text-white/80 hover:text-brandOrange" href="#">TikTok</a></li>
+            <li><a className="text-white/80 hover:text-brandOrange" href="#">LinkedIn</a></li>
           </ul>
         </div>
         <div>

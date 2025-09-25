@@ -8,7 +8,7 @@
   --color-navy: #0A1A2A;
 }
 
-html, body { @apply bg-navy text-white font-body scroll-smooth; }
+html, body { @apply bg-white text-navy font-body scroll-smooth; }
 body { min-height: 100vh; }
 
 h1,h2,h3,h4,h5,h6 { @apply font-display tracking-wide; }
@@ -21,11 +21,11 @@ h1,h2,h3,h4,h5,h6 { @apply font-display tracking-wide; }
 .btn-outline { @apply border-2 border-brandBlue text-brandBlue hover:bg-brandBlue hover:text-navy px-6 py-3; }
 .btn-light { @apply bg-white text-navy hover:bg-brandBlue-light hover:text-navy px-5 py-2; }
 
-.card { @apply bg-white/5 backdrop-blur border border-white/10 rounded-xl p-6 shadow-md transition hover:shadow-xl; }
-.card-dark { @apply bg-navy/60; }
+.card { @apply bg-white text-navy border border-black/5 rounded-xl p-6 shadow-md transition hover:shadow-xl; }
+.card-dark { @apply bg-white; }
 
 .gradient-hero { background: linear-gradient(135deg, #0A1A2A 0%, #4B86AB 60%, #7BAFD4 100%); }
-.alt-band { background: linear-gradient(135deg, #CC5500 0%, #7BAFD4 100%); }
+.alt-band { background: linear-gradient(135deg, #FFEDE0 0%, #E6F2FA 100%); }
 
 /* Scroll animation helpers */
 .fade-in-up { opacity: 0; transform: translateY(24px); }
